@@ -21,7 +21,9 @@
     "exec-sync": "~0.1.6",
     "mstranslator": "~2.0.8",
     "socket.io-client": "~1.4.8",
-    "should": "~11.1.0"
+    "should": "~11.1.0",
+    "body-parser": "~1.15.2",
+    "connect-multiparty": "~2.0.0"
   },
   "devDependencies": {
     "chai": "~3.5.0",
