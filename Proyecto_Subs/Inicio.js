@@ -16,10 +16,23 @@ var client = new MsTranslator({
 app.get('/',
     function(req,res)
     {
-        res.sendFile("/home/ricky/proyectoanalisis/Proyecto_Subs/Proyecto_Subs/Inicio.html");
+        res.sendFile("/home/ricky/proyectoanalisis/Proyecto_Subs/Proyecto_Subs/cliente.html");
     }
 );
 
+app.get('/socket.io-1.3.5.js',
+    function(req,res)
+    {
+        res.sendFile("/home/ricky/proyectoanalisis/Proyecto_Subs/Proyecto_Subs/socket.io-1.3.5.js");
+    }
+);
+
+app.get('/scripts.js',
+    function(req,res)
+    {
+        res.sendFile("/home/ricky/proyectoanalisis/Proyecto_Subs/Proyecto_Subs/scripts.js");
+    }
+);
 app.get('/traducir',
   function sendResponse(req,res)
   {
@@ -42,7 +55,7 @@ function Traducir(query,callback)
       if(err)
       {
         console.log(err);
-        callback("nel chavo");
+        callback(err);
       }
       else
       {
@@ -59,3 +72,21 @@ function traduccion(texto , origen , destino)
               to: destino
           };
 }
+
+io.on('connection', function (socket) {
+  socket.on('traducir', function(data){
+      console.log(data);
+      client.translate(data , function(err,data)
+      {
+        if(err)
+        {
+          console.log(err);
+        }
+        else
+        {
+          socket.emit("traducido",data);
+        }
+      });
+
+    });
+});
